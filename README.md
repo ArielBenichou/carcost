@@ -28,57 +28,51 @@ chmod +x car-cost car-cost.ts
 
 ## Usage
 
-### Adding a Car to the Database
-
-```bash
-./car-cost add --brand "Toyota" --name "RAV4" --trim "XLE" --cost 209990
 ```
+Car Cost of Ownership Calculator
+═════════════════════════════════════════════════════════
+Usage:
+  car-cost <command> [options]
 
-### Searching for Cars
+Commands:
+  add         Add a new car model to the database
+  search      Search for car models in the database
+  simulate    Calculate cost of ownership
+  help        Show this help message
 
-```bash
-./car-cost search "RAV4"
+Examples:
+  car-cost add --brand "Toyota" --name "RAV4" --trim "XLE" --cost 209990 --permitCost 2500
+  car-cost add --brand "Tesla" --name "Model 3" --trim "LR" --cost 489990 --permitCost 3000 \
+           --insurance "[[0,18000],[5,14000],[10,10000]]" \
+           --maintenance "[[0,500],[5,1500],[10,3000],[15,4500]]"
+  car-cost search "RAV4" --verbose
+  car-cost simulate --id 1 --downPayment 50000 --expectedLife 15
+
+Add Car Options:
+  --brand <brand>            Car manufacturer (required)
+  --name <name>              Car model name (required)
+  --trim <trim>              Car trim/variant (required)
+  --cost <amount>            Car purchase price (required)
+  --permitCost <amount>      Yearly permit/registration cost
+  --insurance <points>       JSON array of [year, cost] points for insurance
+  --maintenance <points>     JSON array of [year, cost] points for maintenance
+
+Search Options:
+  --query <text>             Search term for car models
+  --verbose                  Show detailed information including costs
+
+Simulation Options:
+  --id <id>                  Use a car model from the database (includes model-specific costs)
+  --cost <amount>            Car purchase price (if not using --id)
+  --name <name>              Car name (if not using --id)
+  --downPayment <amount>     Down payment amount (default: 0)
+  --loanRate <rate>          Loan interest rate as decimal (default: 0.03)
+  --loanYears <years>        Loan term in years (default: 4)
+  --expectedLife <years>     Expected lifetime of the car (default: 20)
+  --permitCost <amount>      Yearly permit/registration cost (overrides model data)
+  --insurance <points>       JSON array of [year, cost] points (overrides model data)
+  --maintenance <points>     JSON array of [year, cost] points (overrides model data)
 ```
-
-### Calculating Cost of Ownership
-
-Using a car from the database:
-
-```bash
-./car-cost simulate --id 1 --downPayment 50000 --loanRate 0.03 --expectedLife 15
-```
-
-Using custom parameters:
-
-```bash
-./car-cost simulate --cost 209990 --name "Toyota RAV4" \
-  --downPayment 50000 \
-  --insurance "[[0, 14000], [5, 11000], [15, 6500]]" \
-  --maintenance "[[0, 1000], [5, 2000], [10, 3500], [15, 5000]]"
-```
-
-### Help
-
-```bash
-./car-cost help
-```
-
-## Advanced Options
-
-The simulation command supports several customization options:
-
-| Option           | Description                            | Default                                        |
-| ---------------- | -------------------------------------- | ---------------------------------------------- |
-| `--id`           | Use a car model from the database      | -                                              |
-| `--cost`         | Car purchase price (if not using --id) | -                                              |
-| `--name`         | Car name (if not using --id)           | "Custom Car"                                   |
-| `--downPayment`  | Down payment amount                    | 0                                              |
-| `--loanRate`     | Loan interest rate as decimal          | 0.03 (3%)                                      |
-| `--loanYears`    | Loan term in years                     | 4                                              |
-| `--expectedLife` | Expected lifetime of the car           | 20                                             |
-| `--permitCost`   | Yearly permit/registration cost        | 2643                                           |
-| `--insurance`    | JSON array of [year, cost] points      | [[0, 14000], [last, 6500]]                     |
-| `--maintenance`  | JSON array of [year, cost] points      | [[0, 1000], [5, 2000], [10, 3500], [15, 5000]] |
 
 ## Requirements
 
