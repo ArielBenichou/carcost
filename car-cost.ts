@@ -165,7 +165,7 @@ function calculateCostOfOwnership(settings: Settings): { yearlyBreakdown: number
     return yearCost;
   });
   
-  const total = yearlyPayments.reduce((acc, v) => acc + v, 0);
+  const total = yearlyPayments.reduce((acc, v) => acc + v, 0) + downPayment;
   
   return {
     yearlyBreakdown: yearlyPayments,
